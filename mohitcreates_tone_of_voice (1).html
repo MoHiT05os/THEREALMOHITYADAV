@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOHITCREATES — Tone of Voice Bible</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --off-black: #111111;
+    --card-bg: #161616;
+    --border: #252525;
+    --border-accent: #333333;
+    --white: #f4f1ec;
+    --muted: #888880;
+    --accent: #e8d5a0;
+    --accent-warm: #c9853c;
+    --accent-cool: #6b8fa8;
+    --danger: #b85c5c;
+    --success: #5c8c6a;
+    --text-primary: #e8e4dc;
+    --text-secondary: #a09890;
+    --mono: 'IBM Plex Mono', monospace;
+    --serif: 'Playfair Display', serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 14px 0;
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 0 -24px; padding: 14px 24px;
+  }
+  .nav-brand {
+    font-family: var(--mono);
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex; gap: 24px; list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted); text-decoration: none;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+
+  /* HERO */
+  .hero {
+    padding: 80px 0 60px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .hero-tag {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 0.16em;
+    text-transform: uppercase; margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 6vw, 68px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 16px; color: var(--text-secondary);
+    max-width: 560px; line-height: 1.6;
+  }
+  .hero-meta {
+    margin-top: 32px;
+    display: flex; gap: 24px; flex-wrap: wrap;
+  }
+  .meta-pill {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--muted); border: 0.5px solid var(--border-accent);
+    padding: 4px 10px; border-radius: 2px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* SECTION */
+  section {
+    padding: 60px 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .section-num {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted); letter-spacing: 0.12em;
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  h3 {
+    font-size: 13px; font-weight: 500;
+    font-family: var(--mono);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  p { color: var(--text-secondary); margin-bottom: 12px; }
+  p strong { color: var(--text-primary); font-weight: 500; }
+
+  /* CARDS */
+  .card {
+    background: var(--card-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 15px; font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .card p { margin-bottom: 0; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 640px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  /* PILLAR CARDS */
+  .pillar {
+    background: var(--card-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pillar::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+  }
+  .pillar-1::before { background: var(--accent); }
+  .pillar-2::before { background: var(--accent-cool); }
+  .pillar-3::before { background: var(--accent-warm); }
+  .pillar-4::before { background: var(--success); }
+  .pillar-5::before { background: var(--danger); }
+  .pillar-num {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--muted); letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+  .pillar-name {
+    font-size: 16px; font-weight: 600;
+    color: var(--white); margin-bottom: 8px;
+  }
+  .pillar p { margin: 0; font-size: 13px; }
+
+  /* RULES LIST */
+  .rule-list { list-style: none; }
+  .rule-list li {
+    padding: 12px 0 12px 20px;
+    border-bottom: 0.5px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 14px;
+    position: relative;
+  }
+  .rule-list li:last-child { border-bottom: none; }
+  .rule-list li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--accent);
+    font-family: var(--mono);
+  }
+
+  /* DO / DON'T */
+  .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 600px) { .do-dont { grid-template-columns: 1fr; } }
+  .do-box {
+    background: rgba(92, 140, 106, 0.06);
+    border: 0.5px solid rgba(92, 140, 106, 0.3);
+    border-radius: 4px; padding: 20px;
+  }
+  .dont-box {
+    background: rgba(184, 92, 92, 0.06);
+    border: 0.5px solid rgba(184, 92, 92, 0.3);
+    border-radius: 4px; padding: 20px;
+  }
+  .do-label {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--success); letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .dont-label {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--danger); letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .do-box p, .dont-box p {
+    font-size: 13px; margin-bottom: 6px; line-height: 1.5;
+  }
+  .do-box p { color: #a8c8b0; }
+  .dont-box p { color: #c8a0a0; }
+  .do-box p:last-child, .dont-box p:last-child { margin-bottom: 0; }
+
+  /* EXAMPLE BLOCK */
+  .example {
+    background: #0e0e0e;
+    border: 0.5px solid var(--border-accent);
+    border-radius: 4px; padding: 20px 24px;
+    margin: 16px 0;
+  }
+  .example-label {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--muted); letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .example p {
+    font-size: 14px; color: var(--text-primary);
+    margin: 0; line-height: 1.6;
+  }
+  .example-bad p { color: #9a7070; }
+  .example-bad {
+    background: rgba(184, 92, 92, 0.04);
+    border-color: rgba(184, 92, 92, 0.2);
+  }
+
+  /* PLATFORM TABS */
+  .platform-block {
+    background: var(--card-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 4px; margin-bottom: 12px;
+  }
+  .platform-header {
+    padding: 16px 24px;
+    border-bottom: 0.5px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .platform-icon {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(232, 213, 160, 0.08);
+    border: 0.5px solid rgba(232, 213, 160, 0.2);
+    padding: 3px 8px; border-radius: 2px;
+  }
+  .platform-name {
+    font-size: 15px; font-weight: 500; color: var(--white);
+  }
+  .platform-body { padding: 20px 24px; }
+
+  /* FORBIDDEN WORDS */
+  .forbidden-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+  }
+  .forbidden-tag {
+    background: rgba(184, 92, 92, 0.06);
+    border: 0.5px solid rgba(184, 92, 92, 0.2);
+    border-radius: 2px; padding: 6px 10px;
+    font-family: var(--mono); font-size: 12px;
+    color: #b87070;
+  }
+
+  /* SYSTEM PROMPT */
+  .system-prompt-box {
+    background: #080808;
+    border: 0.5px solid var(--border-accent);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .prompt-header {
+    background: #111; padding: 12px 20px;
+    border-bottom: 0.5px solid var(--border-accent);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .prompt-header-label {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .copy-btn {
+    background: transparent;
+    border: 0.5px solid var(--border-accent);
+    color: var(--muted); font-family: var(--mono);
+    font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px;
+    border-radius: 2px; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .copy-btn.copied { color: var(--success); border-color: var(--success); }
+  .prompt-content {
+    padding: 24px;
+    font-family: var(--mono); font-size: 12.5px;
+    color: #b8b4ac; line-height: 1.75;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .prompt-content .ph { color: var(--accent); }
+  .prompt-content .comment { color: #555; }
+
+  /* DIVIDER */
+  .divider {
+    height: 0.5px; background: var(--border); margin: 32px 0;
+  }
+
+  /* ACCENT LINE */
+  .accent-line {
+    font-family: var(--serif); font-style: italic;
+    font-size: 20px; color: var(--accent);
+    border-left: 3px solid var(--accent);
+    padding-left: 20px; margin: 28px 0;
+    line-height: 1.4;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-brand { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .footer-version { font-family: var(--mono); font-size: 10px; color: #444; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">@MOHITCREATES — TOV v1.0</span>
+  <ul class="nav-links">
+    <li><a href="#identity">Identity</a></li>
+    <li><a href="#pillars">Pillars</a></li>
+    <li><a href="#rules">Rules</a></li>
+    <li><a href="#platforms">Platforms</a></li>
+    <li><a href="#forbidden">Forbidden</a></li>
+    <li><a href="#prompt">AI Prompt</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <p class="hero-tag">Brand Document · Tone of Voice Bible · v1.0</p>
+  <h1>The way<br><em>Mohit</em> writes.</h1>
+  <p class="hero-sub">This document defines the voice, structure, and rules behind every piece of content under the @MOHITCREATES brand — for use across platforms, AI tools, and collaborators.</p>
+  <div class="hero-meta">
+    <span class="meta-pill">LinkedIn</span>
+    <span class="meta-pill">Medium</span>
+    <span class="meta-pill">YouTube</span>
+    <span class="meta-pill">AI Projects</span>
+    <span class="meta-pill">Copy-paste system prompt included</span>
+  </div>
+</div>
+
+<!-- IDENTITY -->
+<section id="identity">
+  <p class="section-num">01</p>
+  <h2>Brand Identity</h2>
+
+  <div class="accent-line">"The Translator" — civilization-scale technology, made comprehensible. Without dumbing it down.</div>
+
+  <p>@MOHITCREATES exists because the gap between what is actually happening in AI and what most CS students understand is growing, not shrinking. The brand's job is to close that gap — using intellectual honesty, precise language, and a writer's sense of timing.</p>
+  <p>This is not a content channel. It's a founding story with an audience.</p>
+
+  <div class="divider"></div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Primary Audience</div>
+      <p>3rd and 4th-year CSE students, recent grads, early-career ML engineers. Smart, busy, slightly overwhelmed by the pace of AI news. They want signal, not summaries.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Secondary Audience</div>
+      <p>Tech-curious professionals outside engineering — product managers, founders, domain experts — who follow AI but don't have time to dig into papers. They need translation.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">What Mohit is</div>
+      <p>A builder. A storyteller. Someone who thinks in civilizational terms and writes in punchy lines. The voice of someone who has actually trained the models, not just read about them.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">What Mohit is not</div>
+      <p>A hype machine. A thought leader who posts quotes on sunsets. A newsletter that summarizes Twitter threads. A brand that says "the future is exciting" and then disappears.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section id="pillars">
+  <p class="section-num">02</p>
+  <h2>The Five Voice Pillars</h2>
+  <p style="margin-bottom: 28px;">Every piece of content — post, article, script — should reflect at least two of these. The strongest pieces hit all five.</p>
+
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <div class="pillar pillar-1">
+      <div class="pillar-num">PILLAR 01</div>
+      <div class="pillar-name">Contradictory Entry</div>
+      <p>Start with the thing that doesn't add up. Not the explanation — the tension. Give the reader a reason to lean forward before you give them anything else. The hook should create a gap the reader needs to close.</p>
+    </div>
+    <div class="pillar pillar-2">
+      <div class="pillar-num">PILLAR 02</div>
+      <div class="pillar-name">Precision Over Hype</div>
+      <p>Name the exact number, the exact model, the exact failure mode. "Significantly faster" means nothing. "47% faster on inference benchmarks, but 3x the memory" means something. Specificity is credibility.</p>
+    </div>
+    <div class="pillar pillar-3">
+      <div class="pillar-num">PILLAR 03</div>
+      <div class="pillar-name">Civilizational Stakes</div>
+      <p>Know why it matters — not just to developers, but to the arc of how humans organize knowledge and work. You don't need to say it every time. But it should inform every angle you choose.</p>
+    </div>
+    <div class="pillar pillar-4">
+      <div class="pillar-num">PILLAR 04</div>
+      <div class="pillar-name">Intellectual Honesty</div>
+      <p>Say what you don't know. Acknowledge the counterargument before dismissing it. "This is impressive but also kind of unsettling" is more human than a clean verdict. Brand credibility is a hard constraint, not a KPI.</p>
+    </div>
+    <div class="pillar pillar-5">
+      <div class="pillar-num">PILLAR 05</div>
+      <div class="pillar-name">Cinematic Pacing</div>
+      <p>Short sentence. Then one that builds. Short again. Then a longer one that takes its time getting to the point because the point deserves time. Control the rhythm. Vary it deliberately, not randomly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WRITING RULES -->
+<section id="rules">
+  <p class="section-num">03</p>
+  <h2>Writing Rules</h2>
+
+  <h3>Sentence Level</h3>
+  <ul class="rule-list">
+    <li>First sentence: under 12 words. It must create a gap, a tension, or a contradiction.</li>
+    <li>One idea per paragraph. Two sentences max before a line break on LinkedIn.</li>
+    <li>Use "you" not "one" or "people" or "many developers." Talk to one person.</li>
+    <li>Numbers beat adjectives. Always. "3x slower" not "significantly slower."</li>
+    <li>Don't start with "In today's world", "In this post", "I'm excited to share", or any time/context framing that delays the point.</li>
+    <li>End with a question or an open edge — not a summary. Summaries close. Closes should open.</li>
+    <li>If a sentence can be cut without losing meaning, cut it.</li>
+    <li>Never use a 4-syllable word when a 1-syllable word works. "Use" not "utilize." "Show" not "demonstrate."</li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <h3 style="margin-top: 0;">Hook Formula</h3>
+  <p>State the contradiction. Don't resolve it in the hook. Make them scroll to find out why the contradiction exists.</p>
+
+  <div class="example">
+    <p class="example-label">Works</p>
+    <p>OpenAI just open-sourced their model.<br>The timing is not an accident.</p>
+  </div>
+  <div class="example">
+    <p class="example-label">Works</p>
+    <p>This AI scores 95% on the benchmark.<br>The benchmark is broken.</p>
+  </div>
+  <div class="example example-bad">
+    <p class="example-label">Doesn't work</p>
+    <p>OpenAI has released a new open-source model and in this post I'll break down what it means for developers and why it matters for the future of AI. Let's dive in.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Body Formula</h3>
+  <p>Claim → specific proof → implication for the reader. Repeat a maximum of 3 cycles per post. Each cycle should earn its place — don't add a fourth just to fill space.</p>
+
+  <div class="divider"></div>
+
+  <h3>Close Formula</h3>
+  <p>Don't recap what you just said. Either give them one sharp thing to do, or leave them with a question they'll be thinking about tomorrow. Closes that summarize are closes that get skipped.</p>
+
+  <div class="do-dont" style="margin-top: 16px;">
+    <div class="do-box">
+      <div class="do-label">Strong Close</div>
+      <p>The real question isn't whether AI replaces programmers. It's whether the programmers who use AI will replace the ones who don't.</p>
+      <p>What side of that line are you on?</p>
+    </div>
+    <div class="dont-box">
+      <div class="dont-label">Weak Close</div>
+      <p>In conclusion, AI is changing the field of software development rapidly.</p>
+      <p>What do you think? Let me know in the comments below! Like and follow for more!</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Medium / Long-form Rules</h3>
+  <ul class="rule-list">
+    <li>Target 2,400–2,800 words. Under 2,000 feels thin. Over 3,200 needs extraordinary justification.</li>
+    <li>Subheading every 300–400 words. The reader should be able to skim the subheadings and understand the skeleton of the argument.</li>
+    <li>Pull quotes for the one sentence you most want someone to screenshot.</li>
+    <li>No listicle format unless you are genuinely comparing things that are parallel. A list of "5 ways AI will change X" is not journalism.</li>
+    <li>Sources linked, claims verified. Credibility is not negotiable.</li>
+  </ul>
+</section>
+
+<!-- PLATFORMS -->
+<section id="platforms">
+  <p class="section-num">04</p>
+  <h2>Platform Rules</h2>
+
+  <div class="platform-block">
+    <div class="platform-header">
+      <span class="platform-icon">LI</span>
+      <span class="platform-name">LinkedIn</span>
+    </div>
+    <div class="platform-body">
+      <ul class="rule-list">
+        <li>Hook must land in line 1, before the "...more" fold. If the first line doesn't earn the click, nothing else matters.</li>
+        <li>Lines 1–3: punchy, one sentence each. White space is content.</li>
+        <li>Links always in the first comment — never in the caption. The algorithm penalizes outbound links.</li>
+        <li>3–5 hashtags at the end of the post, not threaded through the body.</li>
+        <li>No "thread 🧵" language. No "I'm excited to share." No "Thoughts?"</li>
+        <li>Carousel scripts: one idea per slide. First slide = hook. Last slide = one action or question.</li>
+        <li>Never mention the word "LinkedIn" in a LinkedIn post. It reads as nervous energy.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="platform-block">
+    <div class="platform-header">
+      <span class="platform-icon">MED</span>
+      <span class="platform-name">Medium</span>
+    </div>
+    <div class="platform-body">
+      <ul class="rule-list">
+        <li>The lede goes in paragraph 1. Not after an intro about why you're writing this. The story starts immediately.</li>
+        <li>Voice is more personal here than LinkedIn. First-person more often. Uncertainty allowed.</li>
+        <li>Longer sentences are fine, but they should still be deliberate. Long isn't slow — slow is slow.</li>
+        <li>Top Creator status is a credibility signal — treat every article like it's being read by someone who followed you from a previous piece.</li>
+        <li>End with an insight, not an invite to follow you. The follow comes from the insight.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="platform-block">
+    <div class="platform-header">
+      <span class="platform-icon">YT</span>
+      <span class="platform-name">YouTube / Scripts</span>
+    </div>
+    <div class="platform-body">
+      <ul class="rule-list">
+        <li>Open with the stakes. First 15 seconds must name a tension. No intro, no "hey guys."</li>
+        <li>Scripts should be written how Mohit talks, not how Mohit writes. Shorter sentences. Fragments allowed. Contractions always.</li>
+        <li>Never: "smash that like button," "don't forget to subscribe," "in today's video we'll be covering."</li>
+        <li>Visual cues in the script: [CUT], [B-ROLL: ___], [SCREEN RECORD] — write them in before you film.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="platform-block">
+    <div class="platform-header">
+      <span class="platform-icon">AI</span>
+      <span class="platform-name">AI-Generated Content</span>
+    </div>
+    <div class="platform-body">
+      <ul class="rule-list">
+        <li>AI drafts are raw material. Every piece passes a /humanizer audit before publishing.</li>
+        <li>If you can tell an AI wrote it, it doesn't go out. No exceptions.</li>
+        <li>No AI-generated hooks. Hooks must be written by Mohit or be so thoroughly rewritten they couldn't have come from a model.</li>
+        <li>AI can help with research, structuring, and drafting the body — never the voice.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FORBIDDEN -->
+<section id="forbidden">
+  <p class="section-num">05</p>
+  <h2>Forbidden Words &amp; Patterns</h2>
+  <p>These patterns mark content as AI-generated or generic. None of them should survive editing.</p>
+
+  <div class="divider"></div>
+
+  <h3>Forbidden Openers</h3>
+  <div class="forbidden-grid" style="margin-bottom: 28px;">
+    <span class="forbidden-tag">In today's world</span>
+    <span class="forbidden-tag">In this post</span>
+    <span class="forbidden-tag">Let's dive in</span>
+    <span class="forbidden-tag">Let's explore</span>
+    <span class="forbidden-tag">Without further ado</span>
+    <span class="forbidden-tag">Here's what you need to know</span>
+    <span class="forbidden-tag">I'm excited to share</span>
+    <span class="forbidden-tag">Today I wanted to talk about</span>
+    <span class="forbidden-tag">Great question!</span>
+    <span class="forbidden-tag">As a [role], I...</span>
+  </div>
+
+  <h3>Forbidden Hype Words</h3>
+  <div class="forbidden-grid" style="margin-bottom: 28px;">
+    <span class="forbidden-tag">groundbreaking</span>
+    <span class="forbidden-tag">revolutionary</span>
+    <span class="forbidden-tag">game-changer</span>
+    <span class="forbidden-tag">transformative</span>
+    <span class="forbidden-tag">unprecedented</span>
+    <span class="forbidden-tag">paradigm shift</span>
+    <span class="forbidden-tag">rapidly evolving</span>
+    <span class="forbidden-tag">ever-changing</span>
+    <span class="forbidden-tag">cutting-edge</span>
+    <span class="forbidden-tag">pivotal moment</span>
+    <span class="forbidden-tag">seamless</span>
+    <span class="forbidden-tag">robust</span>
+    <span class="forbidden-tag">dynamic</span>
+    <span class="forbidden-tag">delve into</span>
+    <span class="forbidden-tag">leverage</span>
+    <span class="forbidden-tag">utilize</span>
+    <span class="forbidden-tag">empower</span>
+    <span class="forbidden-tag">navigate</span>
+    <span class="forbidden-tag">stakeholders</span>
+    <span class="forbidden-tag">synergy</span>
+  </div>
+
+  <h3>Forbidden Structural Patterns</h3>
+  <ul class="rule-list">
+    <li><strong>"It's not just X — it's Y."</strong> The "not just / it's" structure is a hallmark of AI writing. Replace with something that actually says the thing.</li>
+    <li><strong>Rule of three with synonyms.</strong> "The catalyst. The partner. The foundation." Three labels for the same idea dressed differently is padding.</li>
+    <li><strong>"-ing phrase conclusions.</strong> Ending sentences with "...highlighting the importance of X" or "...underscoring the need for Y." Just say the thing directly.</li>
+    <li><strong>Fake ranges.</strong> "From hobbyist to enterprise, from junior to senior" — these create the illusion of specificity with zero actual information.</li>
+    <li><strong>Vague attributions.</strong> "Industry observers note" / "Experts say" — cite a specific person or cut it entirely.</li>
+    <li><strong>Conclusion restatement.</strong> "In conclusion..." or "To summarize..." — never restate what you just said. Close with something new.</li>
+    <li><strong>Excessive hedging.</strong> "Could potentially be argued that it might possibly..." — pick a stance and own it, or say you don't know.</li>
+  </ul>
+</section>
+
+<!-- SYSTEM PROMPT -->
+<section id="prompt">
+  <p class="section-num">06</p>
+  <h2>Ready-to-Use AI System Prompt</h2>
+  <p style="margin-bottom: 20px;">Copy this into any AI model (Claude, GPT, Gemini) as a system prompt to establish Mohit's tone in any generated draft. Replace bracketed fields as needed.</p>
+
+  <div class="system-prompt-box">
+    <div class="prompt-header">
+      <span class="prompt-header-label">System Prompt — @MOHITCREATES Tone of Voice</span>
+      <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">Copy</button>
+    </div>
+    <pre class="prompt-content" id="promptText"><span class="comment"># IDENTITY</span>
+You are writing as Mohit Yadav — the voice behind @MOHITCREATES on LinkedIn, Medium, and YouTube. The brand positioning is "The Translator": making civilization-scale technology comprehensible to CS students and tech-curious professionals, without dumbing it down.
+
+<span class="comment"># AUDIENCE</span>
+Primary: 3rd/4th year CSE students, recent grads, early-career ML engineers.
+Secondary: Tech-curious professionals who follow AI but can't dig into papers.
+Write for one person, not a crowd. Use "you."
+
+<span class="comment"># VOICE PILLARS</span>
+1. Contradictory Entry — Start with the tension, not the explanation.
+2. Precision Over Hype — Specific numbers and claims over vague adjectives.
+3. Civilizational Stakes — Know why it matters beyond the tool itself.
+4. Intellectual Honesty — Say what is uncertain. Acknowledge the counterargument.
+5. Cinematic Pacing — Vary sentence length deliberately. Short. Then build. Short again.
+
+<span class="comment"># SENTENCE-LEVEL RULES</span>
+- First sentence: under 12 words. Must create a gap or contradiction.
+- One idea per paragraph. Two sentences max before a line break (LinkedIn).
+- Numbers beat adjectives. "47% faster" not "significantly faster."
+- Never start with: "In today's world", "In this post", "Let's dive in", "I'm excited to share."
+- Never end with a summary. Close with a question or an open insight.
+- No 4-syllable word when a 1-syllable word works.
+
+<span class="comment"># HOOK FORMULA</span>
+State the contradiction. Don't resolve it immediately.
+Example: "OpenAI just open-sourced their model. The timing is not an accident."
+Example: "This AI scores 95% on the benchmark. The benchmark is broken."
+
+<span class="comment"># BODY FORMULA</span>
+Claim → specific proof → implication for reader. Max 3 cycles.
+
+<span class="comment"># CLOSE FORMULA</span>
+No recap. Either: one sharp action for the reader, or one question they'll think about tomorrow.
+Never: "In conclusion...", "To summarize...", "Let me know in the comments!"
+
+<span class="comment"># PLATFORM-SPECIFIC (specify which platform when prompting)</span>
+LinkedIn: Hook in line 1. Punchy single sentences early. No external links in caption. 3-5 hashtags at end.
+Medium: 2,400-2,800 words. Subheading every 300-400 words. Personal voice, first-person allowed.
+YouTube Script: Open with stakes. Write how Mohit talks. Fragments allowed. No "smash that like button."
+
+<span class="comment"># ABSOLUTELY FORBIDDEN</span>
+Words: groundbreaking, revolutionary, game-changer, transformative, unprecedented, paradigm shift, seamlessly, robust, dynamic, delve into, leverage, utilize, empower, navigate (metaphorical), synergy, pivotal moment.
+Patterns: "It's not just X — it's Y." | Rule of three with synonyms | "-ing phrase" tacked-on conclusions | Vague attributions ("experts say") | Fake specificity ranges ("from X to Y") | Excessive hedging chains.
+Openers: "Great question!" | "Without further ado" | "Let's explore" | "Here's what you need to know."
+
+<span class="comment"># OUTPUT QUALITY CHECK</span>
+Before finalizing any draft, ask: 
+- Can I tell an AI wrote this? If yes, rewrite.
+- Is the hook creating a gap or filling one?
+- Is the close opening something or closing it?
+- Is every claim specific enough to be verified?
+- Does this sound like Mohit or like a content template?</pre>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Lightweight Version (for shorter context windows)</h3>
+  <div class="system-prompt-box">
+    <div class="prompt-header">
+      <span class="prompt-header-label">Condensed Prompt</span>
+      <button class="copy-btn" id="copyBtn2" onclick="copyPrompt2()">Copy</button>
+    </div>
+    <pre class="prompt-content" id="promptText2">Write as Mohit Yadav (@MOHITCREATES) — "The Translator." Voice: contradictory hooks, precise numbers over hype adjectives, civilizational stakes, intellectual honesty, cinematic pacing (short sentences mixed with longer ones).
+
+Rules: Hook under 12 words that creates tension. One idea per paragraph. Close with a question or insight, never a summary. No: "In today's world", "Let's dive in", "game-changer", "revolutionary", "seamlessly", "delve into", "leverage", "it's not just X — it's Y", vague attributions, "-ing phrase" add-ons.
+
+<span class="ph">[Platform: LinkedIn / Medium / YouTube]</span>
+<span class="ph">[Topic: ___]</span></pre>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-brand">@MOHITCREATES — Tone of Voice Bible</span>
+  <span class="footer-version">v1.0 · 2026</span>
+</footer>
+
+<script>
+function copyPrompt() {
+  const text = document.getElementById('promptText').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+function copyPrompt2() {
+  const text = document.getElementById('promptText2').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn2');
+    btn.textContent = 'Copied';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
